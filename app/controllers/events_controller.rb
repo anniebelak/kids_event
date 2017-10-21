@@ -3,7 +3,7 @@ class EventsController < ProtectedController
 
   # GET /events
   def index
-  @events=curent_users.event.all
+  @events=current_user.events.all
     render json: @events
   end
 
@@ -26,10 +26,11 @@ class EventsController < ProtectedController
 
   # PATCH/PUT /events/1
   def update
+
     if @event.update(event_params)
-      render json @event
+      head :no_content
     else
-      render json: @event.errors, status: :unprocessable_entity
+    render json: @event.errors, status: :unprocessable_entity
     end
   end
 
@@ -41,7 +42,7 @@ class EventsController < ProtectedController
   private
     # Use callbacks to share common setup or constraints between actions.
   def set_event
-    @event = current_user.event.find(params[:id])
+    @event = current_user.events.find(params[:id])
   end
 
     # Only allow a trusted parameter "white list" through.
